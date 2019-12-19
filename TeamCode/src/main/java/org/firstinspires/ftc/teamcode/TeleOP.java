@@ -51,7 +51,6 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
-@Disabled
 public class TeleOP extends LinearOpMode
 {
 
@@ -64,11 +63,11 @@ public class TeleOP extends LinearOpMode
     private DcMotor rearLeftWheelMotor;
     private DcMotor rearRightWheelMotor;
     //Intakes.
-    private DcMotor leftIntakeMotor;
-    private DcMotor rightIntakeMotor;
+//    private DcMotor leftIntakeMotor;
+//    private DcMotor rightIntakeMotor;
     //XRails.
-    private DcMotor leftXRailMotor;
-    private DcMotor rightXRailMotor;
+//    private DcMotor leftXRailMotor;
+//    private DcMotor rightXRailMotor;
 
     @Override
     public void runOpMode()
@@ -83,11 +82,11 @@ public class TeleOP extends LinearOpMode
         rearLeftWheelMotor = hardwareMap.dcMotor.get("rearLeftWheelMotor");
         rearRightWheelMotor = hardwareMap.dcMotor.get("rearRightWheelMotor");
         //Intakes.
-        leftIntakeMotor = hardwareMap.dcMotor.get("leftIntakeMotor");
-        rightIntakeMotor = hardwareMap.dcMotor.get("rightIntakeMotor");
+//        leftIntakeMotor = hardwareMap.dcMotor.get("leftIntakeMotor");
+//        rightIntakeMotor = hardwareMap.dcMotor.get("rightIntakeMotor");
         //XRails
-        leftXRailMotor = hardwareMap.dcMotor.get("leftXRailMotor");
-        rightXRailMotor = hardwareMap.dcMotor.get("rightXRailMotor");
+//        leftXRailMotor = hardwareMap.dcMotor.get("leftXRailMotor");
+//        rightXRailMotor = hardwareMap.dcMotor.get("rightXRailMotor");
 
         //Motor power.
         //Wheels.
@@ -96,11 +95,11 @@ public class TeleOP extends LinearOpMode
         rearLeftWheelMotor.setDirection(DcMotor.Direction.FORWARD);
         rearRightWheelMotor.setDirection(DcMotor.Direction.REVERSE);
         //Intakes.
-        leftIntakeMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightIntakeMotor.setDirection(DcMotor.Direction.FORWARD);
+//        leftIntakeMotor.setDirection(DcMotor.Direction.REVERSE);
+//        rightIntakeMotor.setDirection(DcMotor.Direction.FORWARD);
         //XRails
-        leftXRailMotor.setDirection(DcMotor.Direction.FORWARD); //Figure out later.
-        rightXRailMotor.setDirection(DcMotor.Direction.REVERSE); //Figure out later.
+//        leftXRailMotor.setDirection(DcMotor.Direction.FORWARD); //Figure out later.
+//        rightXRailMotor.setDirection(DcMotor.Direction.REVERSE); //Figure out later.
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
