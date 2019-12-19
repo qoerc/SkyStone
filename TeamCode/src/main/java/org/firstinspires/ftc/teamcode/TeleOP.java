@@ -110,12 +110,24 @@ public class TeleOP extends LinearOpMode
         //Declarations.
         double speedModifier = 1;
         boolean skip360;
+        double h;
+        double robotAngle;
         while (opModeIsActive())
         {
             //Reset needed things.
             skip360 = false;
-            double h = Math.hypot((gamepad1.right_trigger - gamepad1.left_trigger), (gamepad1.right_trigger - gamepad1.left_trigger));
-            double robotAngle = Math.atan2((gamepad1.right_trigger - gamepad1.left_trigger), (gamepad1.right_trigger + gamepad1.left_trigger)) - Math.PI / 4;
+            //Trigger turning.
+            if (gamepad1.left_trigger > 0 || gamepad1.right_trigger > 0)
+            {
+                h = Math.hypot((gamepad1.right_trigger - gamepad1.left_trigger), (gamepad1.right_trigger - gamepad1.left_trigger));
+                robotAngle = Math.atan2((gamepad1.right_trigger - gamepad1.left_trigger), (gamepad1.right_trigger + gamepad1.left_trigger)) - Math.PI / 4;
+            }
+            //Stick turning.
+            else
+             {
+                h = Math.hypot(gamepad1.right_stick_x, gamepad1.right_stick_y);
+                robotAngle = Math.atan2(gamepad1.right_stick_y, gamepad1.right_stick_x) - Math.PI / 4;
+            }
             double frontLeftWheelMotorPower = 0;
             double frontRightWheelMotorPower = 0;
             double rearLeftWheelMotorPower = 0;
