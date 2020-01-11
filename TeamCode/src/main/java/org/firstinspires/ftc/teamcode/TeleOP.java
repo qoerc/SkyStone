@@ -112,7 +112,7 @@ public class TeleOP extends LinearOpMode
             double leftRearPower = h * Math.sin(robotAngle) - gamepad1.right_stick_x;
             double rightRearPower = h * Math.cos(robotAngle) + gamepad1.right_stick_x;
 
-
+            //Wheel motor power assignments.
             frontLeftWheelMotor.setPower(leftFrontPower * controller1SpeedModifier);
             frontRightWheelMotor.setPower(-rightFrontPower * controller1SpeedModifier);
             rearLeftWheelMotor.setPower(leftRearPower * controller1SpeedModifier);
