@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -31,10 +33,14 @@ public class TeleOP extends LinearOpMode
     private DcMotor leftXRailMotor;
     private DcMotor rightXRailMotor;
 
+    //Servos.
+    private CRServo clawMovementServo;
+    private Servo grabbyClawServo;
+
     @Override
     public void runOpMode()
     {
-        //Declare motors.
+        //Declare hardware.
 
         //Wheels.
         frontLeftWheelMotor = hardwareMap.dcMotor.get("frontLeftWheelMotor");
@@ -46,25 +52,33 @@ public class TeleOP extends LinearOpMode
         leftIntakeMotor = hardwareMap.dcMotor.get("leftIntakeMotor");
         rightIntakeMotor = hardwareMap.dcMotor.get("rightIntakeMotor");
 
-        //XRails
+        //XRails.
         leftXRailMotor = hardwareMap.dcMotor.get("leftXRailMotor");
         rightXRailMotor = hardwareMap.dcMotor.get("rightXRailMotor");
 
-        //Motor power.
+        //Servos.
+        clawMovementServo = hardwareMap.crservo.get("clawMovementServo");
+        grabbyClawServo = hardwareMap.servo.get("grabbyClawServo");
+
+        //Device power.
 
         //Wheels.
-        frontLeftWheelMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftWheelMotor.setDirection(DcMotor.Direction.FORWARD);
         frontRightWheelMotor.setDirection(DcMotor.Direction.FORWARD);
-        rearLeftWheelMotor.setDirection(DcMotor.Direction.REVERSE);
+        rearLeftWheelMotor.setDirection(DcMotor.Direction.FORWARD);
         rearRightWheelMotor.setDirection(DcMotor.Direction.FORWARD);
 
         //Intakes.
         leftIntakeMotor.setDirection(DcMotor.Direction.REVERSE);
         rightIntakeMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        //XRails
-        leftXRailMotor.setDirection(DcMotor.Direction.FORWARD); //Figure. out later.
-        rightXRailMotor.setDirection(DcMotor.Direction.REVERSE); //Figure out later.
+        //XRails.
+        leftXRailMotor.setDirection(DcMotor.Direction.FORWARD);
+        rightXRailMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        //Servos.
+        clawMovementServo.setDirection(CRServo.Direction.FORWARD);
+        grabbyClawServo.setDirection(Servo.Direction.FORWARD);
 
         //Wait for the game to start (driver presses PLAY).
         waitForStart();
@@ -72,7 +86,6 @@ public class TeleOP extends LinearOpMode
 
         //Initial declarations.
         double controller1SpeedModifier = 1;
-        double controller2SpeedModifier = 1;
         double intakeMotorsPower = 0;
 
         //Run until the end of the match (driver presses STOP).
@@ -81,20 +94,29 @@ public class TeleOP extends LinearOpMode
             //Controller 1.
 
             //Speed modifier controls.
-            if (gamepad1.y)
+            if (gamepad1.b)
                 controller1SpeedModifier = 0.25;
+            else if (gamepad1.y)
+                    controller1SpeedModifier = 0.5;
             else if (gamepad1.x)
-                controller1SpeedModifier = .5;
-            else if (gamepad1.b)
-                controller1SpeedModifier = 0.75;
+                controller1SpeedModifier = .75;
             else if (gamepad1.a)
                 controller1SpeedModifier = 1;
 
             //Wheel motor controls.
-            double xMovement = controller1SpeedModifier * this.gamepad1.left_stick_x;
-            double yMovement = controller1SpeedModifier * this.gamepad1.right_stick_y;
-            double rotationSpeed = controller1SpeedModifier * this.gamepad1.left_stick_x;
-            move(xMovement, yMovement, rotationSpeed);
+            double h = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y);
+            double robotAngle = Math.atan2(gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
+
+            double leftFrontPower = h * Math.cos(robotAngle) - gamepad1.right_stick_x;
+            double rightFrontPower = h * Math.sin(robotAngle) + gamepad1.right_stick_x;
+            double leftRearPower = h * Math.sin(robotAngle) - gamepad1.right_stick_x;
+            double rightRearPower = h * Math.cos(robotAngle) + gamepad1.right_stick_x;
+
+
+            frontLeftWheelMotor.setPower(leftFrontPower * controller1SpeedModifier);
+            frontRightWheelMotor.setPower(-rightFrontPower * controller1SpeedModifier);
+            rearLeftWheelMotor.setPower(leftRearPower * controller1SpeedModifier);
+            rearRightWheelMotor.setPower(-rightRearPower * controller1SpeedModifier);
 
             //Controller 2.
 
@@ -106,8 +128,8 @@ public class TeleOP extends LinearOpMode
             else if (gamepad2.left_bumper)
                 intakeMotorsPower = -1;
             //Intake motor execution.
-            leftIntakeMotor.setPower(intakeMotorsPower * controller2SpeedModifier);
-            rightIntakeMotor.setPower(intakeMotorsPower * controller2SpeedModifier);
+            leftIntakeMotor.setPower(intakeMotorsPower);
+            rightIntakeMotor.setPower(intakeMotorsPower);
 
             //XRail motor speed assignments.
             double xRailMotorsPower = gamepad2.left_stick_y;
@@ -117,43 +139,14 @@ public class TeleOP extends LinearOpMode
             rightXRailMotor.setPower(xRailMotorsPower);
 
             //Claw Movement Control.
+            double clawMovementServoPower = gamepad2.right_stick_x;
+            clawMovementServo.setPower(clawMovementServoPower);
 
+            //Claw Grabbing Control.
+            if (gamepad2.a)
+                grabbyClawServo.setPosition(Servo.MIN_POSITION);
+            else if (gamepad2.b)
+                grabbyClawServo.setPosition(Servo.MAX_POSITION);
         }
-    }
-    //Servs
-    private void move(double xMovement, double yMovement, double rotationSpeed) {
-        double temp = rotationSpeed;
-        rotationSpeed = xMovement;
-        xMovement = temp;
-        // Equations for the power
-        double frontLeftPower = Math.sqrt(.5) * (yMovement - xMovement) + rotationSpeed;
-        double frontRightPower = Math.sqrt(.5) * (xMovement + yMovement) - rotationSpeed;
-        double backLeftPower = Math.sqrt(.5) * (xMovement + yMovement) + rotationSpeed;
-        double backRightPower = Math.sqrt(.5) * (yMovement - xMovement) - rotationSpeed;
-
-        frontLeftPower *= -1;
-        backLeftPower *= -1;
-
-        // Normalize power so it is between -1 and 1
-        double maxPower = Math.max(Math.max(frontLeftPower, frontRightPower), Math.max(backLeftPower, backRightPower));
-        if(maxPower > 1) {
-            frontLeftPower /= maxPower;
-            frontRightPower /= maxPower;
-            backLeftPower /= maxPower;
-            backRightPower /= maxPower;
-        }
-
-        double minPower = Math.min(Math.min(frontLeftPower, frontRightPower), Math.min(backLeftPower, backRightPower));
-        if(minPower < -1) {
-            frontLeftPower /= -minPower;
-            frontRightPower /= -minPower;
-            backLeftPower /= -minPower;
-            backRightPower /= -minPower;
-        }
-
-        this.frontLeftWheelMotor.setPower(frontLeftPower);
-        this.frontRightWheelMotor.setPower(frontRightPower);
-        this.rearLeftWheelMotor.setPower(backLeftPower);
-        this.rearRightWheelMotor.setPower(backRightPower);
     }
 }
