@@ -1,3 +1,5 @@
+###Team 7518 and Team 7519
+
 ## NOTICE
 
 This repository contains the public FTC SDK for the SKYSTONE (2019-2020) competition season.  
