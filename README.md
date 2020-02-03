@@ -1,4 +1,7 @@
-###Team 7518 and Team 7519
+## QOERC SkyStone Code
+Visit qoengineering.club to learn more about our club.
+
+Team 7518 Code by Xander, Team 7519 Code by Max
 
 ## NOTICE
 
