@@ -35,7 +35,9 @@ public class TeleOP extends LinearOpMode
 
     //Servos.
     private CRServo clawMovementServo;
-    private Servo grabbyClawServo;
+    private CRServo grabbyClawServo;
+    private CRServo leftFoundationGrabbyServo;
+    private CRServo rightFoundationGrabbyServo;
 
     @Override
     public void runOpMode()
@@ -58,7 +60,9 @@ public class TeleOP extends LinearOpMode
 
         //Servos.
         clawMovementServo = hardwareMap.crservo.get("clawMovementServo");
-        grabbyClawServo = hardwareMap.servo.get("grabbyClawServo");
+        grabbyClawServo = hardwareMap.crservo.get("grabbyClawServo");
+        leftFoundationGrabbyServo = hardwareMap.crservo.get("leftFoundationGrabbyServo");
+        rightFoundationGrabbyServo = hardwareMap.crservo.get("rightFoundationGrabbyServo");
 
         //Device power.
 
@@ -78,7 +82,9 @@ public class TeleOP extends LinearOpMode
 
         //Servos.
         clawMovementServo.setDirection(CRServo.Direction.FORWARD);
-        grabbyClawServo.setDirection(Servo.Direction.FORWARD);
+        grabbyClawServo.setDirection(CRServo.Direction.FORWARD);
+        leftFoundationGrabbyServo.setDirection(CRServo.Direction.FORWARD);
+        rightFoundationGrabbyServo.setDirection(CRServo.Direction.FORWARD);
 
         //Wait for the game to start (driver presses PLAY).
         waitForStart();
@@ -113,10 +119,10 @@ public class TeleOP extends LinearOpMode
             double rightRearPower = h * Math.cos(robotAngle) + gamepad1.right_stick_x;
 
             //Wheel motor power assignments.
-            frontLeftWheelMotor.setPower(leftFrontPower * controller1SpeedModifier);
-            frontRightWheelMotor.setPower(-rightFrontPower * controller1SpeedModifier);
-            rearLeftWheelMotor.setPower(leftRearPower * controller1SpeedModifier);
-            rearRightWheelMotor.setPower(-rightRearPower * controller1SpeedModifier);
+            frontLeftWheelMotor.setPower(leftFrontPower * 0.7 * controller1SpeedModifier);
+            frontRightWheelMotor.setPower(-rightFrontPower * 0.7 * controller1SpeedModifier);
+            rearLeftWheelMotor.setPower(leftRearPower * 0.7 * controller1SpeedModifier);
+            rearRightWheelMotor.setPower(-rightRearPower * 0.7 * controller1SpeedModifier);
 
             //Controller 2.
 
@@ -144,9 +150,28 @@ public class TeleOP extends LinearOpMode
 
             //Claw Grabbing Control.
             if (gamepad2.a)
-                grabbyClawServo.setPosition(Servo.MIN_POSITION);
+                grabbyClawServo.setPower(0.3);
             else if (gamepad2.b)
-                grabbyClawServo.setPosition(Servo.MAX_POSITION);
+                grabbyClawServo.setPower(-0.3);
+            else
+                grabbyClawServo.setPower(0);
+
+            //Foundation Grabbing Control.
+            if (gamepad2.y)
+            {
+                leftFoundationGrabbyServo.setPower(0.25);
+                rightFoundationGrabbyServo.setPower(0.25);
+            }
+            else if (gamepad2.x)
+            {
+                leftFoundationGrabbyServo.setPower(-0.25);
+                rightFoundationGrabbyServo.setPower(-0.25);
+            }
+            else
+            {
+                leftFoundationGrabbyServo.setPower(0);
+                rightFoundationGrabbyServo.setPower(0);
+            }
         }
     }
 }
