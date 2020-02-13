@@ -22,6 +22,7 @@ public class TeleOP extends LinearOpMode
     //Wheels.
     private DcMotor frontLeftMovementMotor;
     private DcMotor frontRightMovementMotor;
+
     private DcMotor rearLeftMovementMotor;
     private DcMotor rearRightMovementMotor;
 
@@ -77,14 +78,14 @@ public class TeleOP extends LinearOpMode
         rightIntakeMotor.setDirection(DcMotor.Direction.FORWARD);
 
         //XRails.
-        leftXRailMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightXRailMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftXRailMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightXRailMotor.setDirection(DcMotor.Direction.FORWARD);
 
         //Servos.
         clawMovementServo.setDirection(CRServo.Direction.FORWARD);
         clawActuationServo.setDirection(CRServo.Direction.FORWARD);
         leftFoundationActuationServo.setDirection(CRServo.Direction.FORWARD);
-        rightFoundationActuationServo.setDirection(CRServo.Direction.FORWARD);
+        rightFoundationActuationServo.setDirection(CRServo.Direction.REVERSE);
 
         //Wait for the game to start (driver presses PLAY).
         waitForStart();
