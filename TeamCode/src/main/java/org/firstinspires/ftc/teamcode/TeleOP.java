@@ -35,9 +35,9 @@ public class TeleOP extends LinearOpMode
 
     //Servos.
     private CRServo clawMovementServo;
-    private CRServo grabbyClawServo;
-    private CRServo leftFoundationGrabbyServo;
-    private CRServo rightFoundationGrabbyServo;
+    private CRServo clawActuationServo;
+    private CRServo leftFoundationActuationServo;
+    private CRServo rightFoundationActuationServo;
 
     @Override
     public void runOpMode()
@@ -60,9 +60,9 @@ public class TeleOP extends LinearOpMode
 
         //Servos.
         clawMovementServo = hardwareMap.crservo.get("clawMovementServo");
-        grabbyClawServo = hardwareMap.crservo.get("grabbyClawServo");
-        leftFoundationGrabbyServo = hardwareMap.crservo.get("leftFoundationGrabbyServo");
-        rightFoundationGrabbyServo = hardwareMap.crservo.get("rightFoundationGrabbyServo");
+        clawActuationServo = hardwareMap.crservo.get("clawActuationServo");
+        leftFoundationActuationServo = hardwareMap.crservo.get("leftFoundationActuationServo");
+        rightFoundationActuationServo = hardwareMap.crservo.get("rightFoundationActuationServo");
 
         //Device power.
 
@@ -82,9 +82,9 @@ public class TeleOP extends LinearOpMode
 
         //Servos.
         clawMovementServo.setDirection(CRServo.Direction.FORWARD);
-        grabbyClawServo.setDirection(CRServo.Direction.FORWARD);
-        leftFoundationGrabbyServo.setDirection(CRServo.Direction.FORWARD);
-        rightFoundationGrabbyServo.setDirection(CRServo.Direction.FORWARD);
+        clawActuationServo.setDirection(CRServo.Direction.FORWARD);
+        leftFoundationActuationServo.setDirection(CRServo.Direction.FORWARD);
+        rightFoundationActuationServo.setDirection(CRServo.Direction.FORWARD);
 
         //Wait for the game to start (driver presses PLAY).
         waitForStart();
@@ -148,29 +148,29 @@ public class TeleOP extends LinearOpMode
             double clawMovementServoPower = gamepad2.right_stick_x;
             clawMovementServo.setPower(clawMovementServoPower);
 
-            //Claw Grabbing Control.
+            //Claw Actuation Control.
             if (gamepad2.a)
-                grabbyClawServo.setPower(0.3);
+                clawActuationServo.setPower(0.3);
             else if (gamepad2.b)
-                grabbyClawServo.setPower(-0.3);
+                clawActuationServo.setPower(-0.3);
             else
-                grabbyClawServo.setPower(0);
+                clawActuationServo.setPower(0);
 
-            //Foundation Grabbing Control.
+            //Foundation Actuation Control.
             if (gamepad2.y)
             {
-                leftFoundationGrabbyServo.setPower(0.25);
-                rightFoundationGrabbyServo.setPower(0.25);
+                leftFoundationActuationServo.setPower(0.25);
+                rightFoundationActuationServo.setPower(0.25);
             }
             else if (gamepad2.x)
             {
-                leftFoundationGrabbyServo.setPower(-0.25);
-                rightFoundationGrabbyServo.setPower(-0.25);
+                leftFoundationActuationServo.setPower(-0.25);
+                rightFoundationActuationServo.setPower(-0.25);
             }
             else
             {
-                leftFoundationGrabbyServo.setPower(0);
-                rightFoundationGrabbyServo.setPower(0);
+                leftFoundationActuationServo.setPower(0);
+                rightFoundationActuationServo.setPower(0);
             }
         }
     }
