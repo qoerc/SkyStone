@@ -20,10 +20,10 @@ public class TeleOP extends LinearOpMode
     //Left and Right, front and back are all as if you're looking at the robot from the back.
 
     //Wheels.
-    private DcMotor frontLeftWheelMotor;
-    private DcMotor frontRightWheelMotor;
-    private DcMotor rearLeftWheelMotor;
-    private DcMotor rearRightWheelMotor;
+    private DcMotor frontLeftMotor;
+    private DcMotor frontRightMotor;
+    private DcMotor rearLeftMotor;
+    private DcMotor rearRightMotor;
 
     //Intakes.
     private DcMotor leftIntakeMotor;
@@ -45,10 +45,10 @@ public class TeleOP extends LinearOpMode
         //Declare hardware.
 
         //Wheels.
-        frontLeftWheelMotor = hardwareMap.dcMotor.get("frontLeftWheelMotor");
-        frontRightWheelMotor = hardwareMap.dcMotor.get("frontRightWheelMotor");
-        rearLeftWheelMotor = hardwareMap.dcMotor.get("rearLeftWheelMotor");
-        rearRightWheelMotor = hardwareMap.dcMotor.get("rearRightWheelMotor");
+        frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
+        frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
+        rearLeftMotor = hardwareMap.dcMotor.get("rearLeftMotor");
+        rearRightMotor = hardwareMap.dcMotor.get("rearRightMotor");
 
         //Intakes.
         leftIntakeMotor = hardwareMap.dcMotor.get("leftIntakeMotor");
@@ -67,10 +67,10 @@ public class TeleOP extends LinearOpMode
         //Device power.
 
         //Wheels.
-        frontLeftWheelMotor.setDirection(DcMotor.Direction.FORWARD);
-        frontRightWheelMotor.setDirection(DcMotor.Direction.FORWARD);
-        rearLeftWheelMotor.setDirection(DcMotor.Direction.FORWARD);
-        rearRightWheelMotor.setDirection(DcMotor.Direction.FORWARD);
+        frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+        frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
+        rearLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+        rearRightMotor.setDirection(DcMotor.Direction.FORWARD);
 
         //Intakes.
         leftIntakeMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -119,10 +119,10 @@ public class TeleOP extends LinearOpMode
             double rightRearPower = h * Math.cos(robotAngle) + gamepad1.right_stick_x;
 
             //Wheel motor power assignments.
-            frontLeftWheelMotor.setPower(leftFrontPower * 0.7 * controller1SpeedModifier);
-            frontRightWheelMotor.setPower(-rightFrontPower * 0.7 * controller1SpeedModifier);
-            rearLeftWheelMotor.setPower(leftRearPower * 0.7 * controller1SpeedModifier);
-            rearRightWheelMotor.setPower(-rightRearPower * 0.7 * controller1SpeedModifier);
+            frontLeftMotor.setPower(leftFrontPower * 0.7 * controller1SpeedModifier);
+            frontRightMotor.setPower(-rightFrontPower * 0.7 * controller1SpeedModifier);
+            rearLeftMotor.setPower(leftRearPower * 0.7 * controller1SpeedModifier);
+            rearRightMotor.setPower(-rightRearPower * 0.7 * controller1SpeedModifier);
 
             //Controller 2.
 
