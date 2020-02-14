@@ -45,29 +45,32 @@ public class AutoRight extends LinearOpMode
         rearRightMovementMotor.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart(); //Wait for the user to press the play button.
+        drive(0.7, 1120);
+        rotate(0.7, 1120);
         drive(0.7, 10080);
     } //End runOpMode.
 
-
-
-    //Drive.
     private void drive (double speed , int ticks)
     {
-        //LAZY BOI PROGRAMMING BLOCK.
-        double h = Math.hypot(1, 0);
-        double robotAngle = Math.atan2(0, 1) - Math.PI / 4;
-        double leftFrontPower = h * Math.cos(robotAngle);
-        double rightFrontPower = h * Math.sin(robotAngle);
-        double leftRearPower = h * Math.sin(robotAngle);
-        double rightRearPower = h * Math.cos(robotAngle);
-
-        frontLeftMovementMotor.setPower(leftFrontPower * speed);
+        frontLeftMovementMotor.setPower(speed);
         frontLeftMovementMotor.setTargetPosition(ticks);
-        frontRightMovementMotor.setPower(-rightFrontPower * speed);
+        frontRightMovementMotor.setPower(-speed);
         frontRightMovementMotor.setTargetPosition(-ticks);
-        rearLeftMovementMotor.setPower(leftRearPower * speed);
+        rearLeftMovementMotor.setPower(speed);
         rearLeftMovementMotor.setTargetPosition(ticks);
-        rearRightMovementMotor.setPower(-rightRearPower * speed);
+        rearRightMovementMotor.setPower(-speed);
         rearRightMovementMotor.setTargetPosition(-ticks);
     } //End drive.
+
+    private void rotate (double speed , int ticks)
+    {
+        frontLeftMovementMotor.setPower(speed);
+        frontLeftMovementMotor.setTargetPosition(ticks);
+        frontRightMovementMotor.setPower(speed);
+        frontRightMovementMotor.setTargetPosition(ticks);
+        rearLeftMovementMotor.setPower(speed);
+        rearLeftMovementMotor.setTargetPosition(ticks);
+        rearRightMovementMotor.setPower(speed);
+        rearRightMovementMotor.setTargetPosition(ticks);
+    } //End rotate.
 } //End AutoRight.
