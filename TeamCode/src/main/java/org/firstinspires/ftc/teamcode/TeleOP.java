@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="TeleOP", group="7519")
 public class TeleOP extends LinearOpMode
 {
 
@@ -78,8 +78,8 @@ public class TeleOP extends LinearOpMode
         rightIntakeMotor.setDirection(DcMotor.Direction.FORWARD);
 
         //XRails.
-        leftXRailMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightXRailMotor.setDirection(DcMotor.Direction.FORWARD);
+        leftXRailMotor.setDirection(DcMotor.Direction.FORWARD);
+        rightXRailMotor.setDirection(DcMotor.Direction.REVERSE);
 
         //Servos.
         clawMovementServo.setDirection(CRServo.Direction.FORWARD);
