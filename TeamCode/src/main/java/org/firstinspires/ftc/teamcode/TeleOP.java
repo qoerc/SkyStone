@@ -87,13 +87,15 @@ public class TeleOP extends LinearOpMode
         leftFoundationActuationServo.setDirection(CRServo.Direction.FORWARD);
         rightFoundationActuationServo.setDirection(CRServo.Direction.REVERSE);
 
-        //Wait for the game to start (driver presses PLAY).
+        //Wait for the game to start (driver presses PLAY)..
+
         waitForStart();
         runtime.reset();
 
         //Initial declarations.
         double controller1SpeedModifier = 1;
         double intakeMotorsPower = 0;
+        int foundationActuationPower = 1;
 
         //Run until the end of the match (driver presses STOP).
         while (opModeIsActive())
@@ -151,28 +153,19 @@ public class TeleOP extends LinearOpMode
 
             //Claw Actuation Control.
             if (gamepad2.a)
-                clawActuationServo.setPower(0.3);
+                clawActuationServo.setPower(1);
             else if (gamepad2.b)
-                clawActuationServo.setPower(-0.3);
+                clawActuationServo.setPower(-1);
             else
-                clawActuationServo.setPower(0);
+                clawActuationServo.setPower(0.5);
 
             //Foundation Actuation Control.
             if (gamepad2.y)
-            {
-                leftFoundationActuationServo.setPower(0.25);
-                rightFoundationActuationServo.setPower(0.25);
-            }
+                foundationActuationPower = 1;
             else if (gamepad2.x)
-            {
-                leftFoundationActuationServo.setPower(-0.25);
-                rightFoundationActuationServo.setPower(-0.25);
-            }
-            else
-            {
-                leftFoundationActuationServo.setPower(0);
-                rightFoundationActuationServo.setPower(0);
-            }
+                foundationActuationPower = -1;
+            leftFoundationActuationServo.setPower(foundationActuationPower);
+            rightFoundationActuationServo.setPower(foundationActuationPower);
         }
     }
 }
