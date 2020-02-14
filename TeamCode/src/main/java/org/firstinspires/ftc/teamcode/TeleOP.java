@@ -166,6 +166,6 @@ public class TeleOP extends LinearOpMode
                 foundationActuationPower = -1;
             leftFoundationActuationServo.setPower(foundationActuationPower);
             rightFoundationActuationServo.setPower(foundationActuationPower);
-        }
-    }
-}
+        } //End while.
+    } //End runOpMode.
+} //End TeleOp
