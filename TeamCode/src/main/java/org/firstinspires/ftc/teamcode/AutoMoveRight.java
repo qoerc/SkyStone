@@ -13,8 +13,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-@Autonomous(name = "AutoStones", group = "7519")
-public class AutoStones extends LinearOpMode
+@Autonomous(name = "AutoMoveRight", group = "7519")
+public class AutoMoveRight extends LinearOpMode
 {
     // Declare Auto members.
 
@@ -45,32 +45,35 @@ public class AutoStones extends LinearOpMode
         rearRightMovementMotor.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart(); //Wait for the user to press the play button.
-        drive(0.7, 112000);
-        rotate(-0.7, -11200);
-        drive(0.7, 11200);
-    } //End runOpMode.
 
-    private void drive (double speed , int ticks)
+        //1220 ticks = 1 full rotation.
+        for(int i = 0; i < 500; i++)
+            drive(0.7, 1, 0, 0, -1);
+        for(int i = 0; i < 50000; i++)
+            drive(0.7, 1, -1, 0, 0);
+        for(int i = 0; i < 500; i++)
+            drive(0.7, 1, 0, 0, 1);
+        for(int i = 0; i < 2000; i++)
+            drive(0.7, 1, -1, 0, 0);
+} //End runOpMode.
+
+    private void drive (double speed , int ticks, int lX, int lY, int rX)
     {
-        frontLeftMovementMotor.setPower(speed);
+        //LAZY BOI PROGRAMMING BLOCK.
+        double h = Math.hypot(lX, lY);
+        double robotAngle = Math.atan2(lY, lX) - Math.PI / 4;
+        double leftFrontPower = h * Math.cos(robotAngle) - rX;
+        double rightFrontPower = h * Math.sin(robotAngle)+ rX;
+        double leftRearPower = h * Math.sin(robotAngle)- rX;
+        double rightRearPower = h * Math.cos(robotAngle) + rX;
+
+        frontLeftMovementMotor.setPower(leftFrontPower * speed);
         frontLeftMovementMotor.setTargetPosition(ticks);
-        frontRightMovementMotor.setPower(-speed);
+        frontRightMovementMotor.setPower(-rightFrontPower * speed);
         frontRightMovementMotor.setTargetPosition(-ticks);
-        rearLeftMovementMotor.setPower(speed);
+        rearLeftMovementMotor.setPower(leftRearPower * speed);
         rearLeftMovementMotor.setTargetPosition(ticks);
-        rearRightMovementMotor.setPower(-speed);
+        rearRightMovementMotor.setPower(-rightRearPower * speed);
         rearRightMovementMotor.setTargetPosition(-ticks);
     } //End drive.
-
-    private void rotate (double speed , int ticks)
-    {
-        frontLeftMovementMotor.setPower(speed);
-        frontLeftMovementMotor.setTargetPosition(ticks);
-        frontRightMovementMotor.setPower(speed);
-        frontRightMovementMotor.setTargetPosition(ticks);
-        rearLeftMovementMotor.setPower(speed);
-        rearLeftMovementMotor.setTargetPosition(ticks);
-        rearRightMovementMotor.setPower(speed);
-        rearRightMovementMotor.setTargetPosition(ticks);
-    } //End rotate.
-} //End AutoStones.
+} //End AutoMoveRight.
