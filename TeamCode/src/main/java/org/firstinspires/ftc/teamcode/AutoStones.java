@@ -13,8 +13,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-@Autonomous(name = "AutoRight", group = "7519")
-public class AutoRight extends LinearOpMode
+@Autonomous(name = "AutoStones", group = "7519")
+public class AutoStones extends LinearOpMode
 {
     // Declare Auto members.
 
@@ -45,9 +45,9 @@ public class AutoRight extends LinearOpMode
         rearRightMovementMotor.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart(); //Wait for the user to press the play button.
-        drive(0.7, 1120);
-        rotate(0.7, 1120);
-        drive(0.7, 10080);
+        drive(0.7, 112000);
+        rotate(-0.7, -11200);
+        drive(0.7, 11200);
     } //End runOpMode.
 
     private void drive (double speed , int ticks)
@@ -73,4 +73,4 @@ public class AutoRight extends LinearOpMode
         rearRightMovementMotor.setPower(speed);
         rearRightMovementMotor.setTargetPosition(ticks);
     } //End rotate.
-} //End AutoRight.
+} //End AutoStones.

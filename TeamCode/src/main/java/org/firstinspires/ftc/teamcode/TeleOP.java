@@ -131,11 +131,11 @@ public class TeleOP extends LinearOpMode
 
             //Intake motor speed assignments.
             if (gamepad2.right_bumper)
-                intakeMotorsPower = 1;
+                intakeMotorsPower = 0.75;
             else if (gamepad2.start)
                 intakeMotorsPower = 0;
             else if (gamepad2.left_bumper)
-                intakeMotorsPower = -1;
+                intakeMotorsPower = -0.75;
             //Intake motor execution.
             leftIntakeMotor.setPower(intakeMotorsPower);
             rightIntakeMotor.setPower(intakeMotorsPower);
