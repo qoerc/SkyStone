@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name = "AutoMoveRight", group = "7519")
+@Autonomous(name = "AutoMoveRightFar", group = "7519")
 public class AutoMoveRightFar extends LinearOpMode
 {
     // Declare Auto members.
@@ -38,8 +38,10 @@ public class AutoMoveRightFar extends LinearOpMode
         waitForStart(); //Wait for the user to press the play button.
 
         //1220 ticks = 1 full rotation.
-        for(int i = 0; i < 12500; i++)
+        for(int i = 0; i < 15000; i++)
             drive(0.7, 1, 0, -1, 0);
+        for(int i = 0; i < 15000; i++)
+        drive(0, 0, 0, 0, 0);
         for(int i = 0; i < 25000; i++)
             drive(0.7, 1, -1, 0, 0);
 } //End runOpMode.
@@ -63,4 +65,4 @@ public class AutoMoveRightFar extends LinearOpMode
         rearRightMovementMotor.setPower(-rightRearPower * speed);
         rearRightMovementMotor.setTargetPosition(-ticks);
     } //End drive.
-} //End AutoMoveRight.
+} //End AutoMoveRightFar.
